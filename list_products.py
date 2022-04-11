@@ -1,17 +1,10 @@
 from db.mongodb import MongoDB
+from utils.config import load_config
 
-MONGO_SERVER = "mongodb://root:rootpass@localhost:27017"
-MONGO_DB_NAME = "clients_flow"
-MONGO_SERVER_PRODUCT = "products"
-MONGO_SERVER_CLIENTS = "clients"
+config = load_config("config.yaml")
 
 db = MongoDB()
-db.db_connect(
-    db_connection_string=MONGO_SERVER,
-    db_name=MONGO_DB_NAME,
-    client_table_name=MONGO_SERVER_CLIENTS,
-    product_table_name=MONGO_SERVER_PRODUCT,
-)
+db.db_connect(config)
 
 products = db.load_all_products()
 

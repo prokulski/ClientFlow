@@ -7,28 +7,21 @@ from db.mongodb import MongoDB
 from models.client import Client
 from models.product import Product
 from streaming.kafka_class import Kafka
+from utils.config import load_config
+
+config = load_config("config.yaml")
+print(config)
 
 product_colors = ["biały", "czerwony", "zielony", "niebieski", "czarny"]
 product_names = ["mleko", "cukier", "czekolada", "chleb", "masło"]
 
-KAFKA_SERVER = "127.0.0.1:9093"
-KAFKA_TOPIC_NAME = "test_topic_1"
-MONGO_SERVER = "mongodb://root:rootpass@localhost:27017"
-MONGO_DB_NAME = "clients_flow"
-MONGO_SERVER_PRODUCT = "products"
-MONGO_SERVER_CLIENTS = "clients"
 
 faker = Faker(locale="pl")
 db = MongoDB()
-db.db_connect(
-    db_connection_string=MONGO_SERVER,
-    db_name=MONGO_DB_NAME,
-    client_table_name=MONGO_SERVER_CLIENTS,
-    product_table_name=MONGO_SERVER_PRODUCT,
-)
+db.db_connect(config)
 
 
-kafka_server = Kafka(KAFKA_SERVER, KAFKA_TOPIC_NAME)
+kafka_server = Kafka(config["kafka_servers"], config["kafka_topic_name"])
 kafka_producer = kafka_server.make_producer()
 
 
@@ -50,7 +43,7 @@ for i in range(5):
     print("=" * 60)
 
     # wysłanie na kafkę
-    future = kafka_producer.send(KAFKA_TOPIC_NAME, c.to_dict())
+    future = kafka_producer.send(config["kafka_topic_name"], c.to_dict())
     record_metadata = future.get(timeout=1)
 
     # zapis do Mongo

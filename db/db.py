@@ -1,13 +1,11 @@
-from typing import List, Protocol
+from typing import Dict, List, Protocol
 
 from models.client import Client
 from models.product import ProductBase
 
 
 class DB(Protocol):
-    def db_connect(
-        self, db_connection_string: str, db_name: str, client_table_name: str, product_table_name: str
-    ) -> None:
+    def db_connect(self, config: Dict) -> None:
         """inicjalizacja połączenia z bazą"""
         raise NotImplementedError()
 

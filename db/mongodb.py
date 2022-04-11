@@ -14,14 +14,12 @@ class MongoDB(DB):
     __client_collection = None
     __product_collection = None
 
-    def db_connect(
-        self, db_connection_string: str, db_name: str, client_table_name: str, product_table_name: str
-    ) -> None:
+    def db_connect(self, config: Dict) -> None:
         """inicjalizacja połączenia z bazą"""
-        self.__mongo_client = MongoClient(db_connection_string)
-        self.__mongo_database = self.__mongo_client[db_name]
-        self.__client_collection = self.__mongo_database[client_table_name]
-        self.__product_collection = self.__mongo_database[product_table_name]
+        self.__mongo_client = MongoClient(config["db_uri"])
+        self.__mongo_database = self.__mongo_client[config["db_name"]]
+        self.__client_collection = self.__mongo_database[config["clients_table"]]
+        self.__product_collection = self.__mongo_database[config["products_table"]]
 
     def __preproces_product(self, product: Dict) -> ProductBase:
         return ProductBase(name=product.get("name"), color=product.get("color"), price=product.get("price"))
