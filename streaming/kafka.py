@@ -13,18 +13,18 @@ class Kafka:
         else:
             self.group_id = str(uuid1())
 
-    def make_producer(self):
+    def make_producer(self) -> KafkaProducer:
         return KafkaProducer(
             bootstrap_servers=self.bootstrap_server,
             acks="all",
             value_serializer=lambda v: json.dumps(v).encode("utf-8"),
         )
 
-    def make_consumer(self):
+    def make_consumer(self) -> KafkaConsumer:
         return KafkaConsumer(
             self.topic_name,
             group_id=self.group_id,
             bootstrap_servers=self.bootstrap_server,
-            auto_offset_reset="latest",
+            auto_offset_reset="earliest",
             value_deserializer=json.loads,
         )
