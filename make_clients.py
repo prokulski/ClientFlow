@@ -6,10 +6,11 @@ from faker import Faker
 from db.mongodb import MongoDB
 from models.client import Client
 from models.product import Product
-from streaming.kafka import Kafka
+from streaming.kafka_class import Kafka
 
 product_colors = ["biały", "czerwony", "zielony", "niebieski", "czarny"]
 product_names = ["mleko", "cukier", "czekolada", "chleb", "masło"]
+
 KAFKA_SERVER = "127.0.0.1:9093"
 KAFKA_TOPIC_NAME = "test_topic_1"
 MONGO_SERVER = "mongodb://root:rootpass@localhost:27017"
