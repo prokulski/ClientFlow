@@ -23,13 +23,16 @@ class MongoDB(DB):
         self.__client_collection = self.__mongo_database[client_table_name]
         self.__product_collection = self.__mongo_database[product_table_name]
 
-    def __preproces_product(self, product: Dict) -> Product:
+    def __preproces_product(self, product: Dict) -> ProductBase:
+        return ProductBase(name=product.get("name"), color=product.get("color"), price=product.get("price"))
+
+    def __preproces_client_product(self, product: Dict) -> Product:
         return Product(
             name=product.get("name"),
             color=product.get("color"),
             price=product.get("price"),
             quantity=product.get("quantity"),
-            timestamp=datetime.fromtimestamp(product.get("timestamp_ms") / 1000),
+            timestamp=datetime.fromtimestamp(product.get("timestamp_ms", 0) / 1000),
         )
 
     def load_all_products(self) -> List[ProductBase]:
@@ -53,7 +56,7 @@ class MongoDB(DB):
         )
         if client.get("products"):
             for product in client.get("products"):
-                p = self.__preproces_product(product)
+                p = self.__preproces_client_product(product)
                 client_obj.add_product(product=p)
         return client_obj
 
