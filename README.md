@@ -1,16 +1,32 @@
-# Flow
+# Sklep zdarzeniowy
 
-Coś generuje różne eventy na kafkę
+Projekt to *proof of concept* sklepu opartego o rozproszoną architekturę i komunikację poprzez Kafkę. Bardziej precyzyjny opis znajduje się na [blogu](https://blog.prokulski.science).
 
-+ nowy produkt
-+ nowy klient
-+ klient kupuje produkt
+W sklepie mogą się pojawić przykładowe zdarzenia:
 
-Coś innego odbiera te eventy i odpowiednio na nie reaguje:
++ operator sklepu dodaje produkt do listy dostępnych w sklepie produktów
++ klient rejestruje się w sklepie i od teraz może robić zakupy
++ klient kupuje produkt i tym samym dodaje go listy posiadanychrzeczy
 
-+ dodaje produkt do listy dostępnych produktów
-+ dodaje klienta do listy klientów
-+ dodaje produkt do listy kupionych przez klienta rzeczy
+## Użycie
+
+1. Klonujemy repozytorium
+1. Tworzymy środowisko wirtualne (Python 3.9+) np. przez `virtualenv venv`
+1. Aktywujemy środowisko wirtualne przez `source venv/bin/activate`
+1. Instalujemy potrzebne pakiety przez `pip install -r requirements.txt`
+1. Uruchamiamy potrzebne komponenty (Apache Kafka + MongoDB) przez `docker-compose up -d`
+
+### Stworzenie klientów
+
+Na początek potrzebujemy przykładowych klientów. Tworzymy ich przez `python tools/make_customers.py`
+
+Listę klientów możemy podejrzeć przez `python tools/list_customers.py`
+
+### Stworzenie produktów
+
+Podobnie tworzymy przykładowe produkty dostępne w sklepie `python tools/make_products.py`
+
+Listę dostępnych produktów zobaczymy dzięki `python tools/list_products.py`
 
 ## Flowchart całego procesu
 
@@ -19,7 +35,7 @@ flowchart
     Sklep[Operator sklepu] --> NowyProdukt[/dodanie produktu/];
     Klient[Klient sklepu] --> NowyKlient[/rejestracja klienta/];
     Klient --> ZakupProduktu[/zakup produktu/];
-    NowyProdukt --> Kafka{{pas transmisyjny}};
+    NowyProdukt --> Kafka{{pas transmisyjny - Apache Kafka}};
     NowyKlient --> Kafka;
     ZakupProduktu --> Kafka;
     Kafka --> Preprocesing{Rozpoznanie akcji};
@@ -31,7 +47,9 @@ flowchart
     DodanieProduktu --> BazaProd[(Baza danych produktów)];
 ```
 
-## Dodanie produktu do oferty sklepu
+Działanie poszczególnych zdarzeń w szczegółach opisują kolejne punkty.
+
+### Dodanie produktu do oferty sklepu
 
 ```mermaid
 flowchart LR
@@ -39,9 +57,7 @@ flowchart LR
     SaveProduct --> BazaProd[(Baza danych produktów)];
 ```
 
-
-
-## Rejestracja klienta w sklepie
+### Rejestracja klienta w sklepie
 
 ```mermaid
 flowchart LR
@@ -49,7 +65,7 @@ flowchart LR
     SaveClient --> BazaKlient[(Baza danych klientów)];
 ```
 
-## Zakup produktu przez klienta
+### Zakup produktu przez klienta
 
 ```mermaid
 flowchart LR
@@ -58,4 +74,3 @@ flowchart LR
     UpdateClient --> SaveClient[/zapisanie klienta/];
     SaveClient --> BazaKlient;
 ```
-
