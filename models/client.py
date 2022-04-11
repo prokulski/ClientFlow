@@ -20,7 +20,7 @@ class Client:
     def __repr__(self) -> str:
         client = f"{self.first_name} {self.last_name} ({self.id})"
         if self.products:
-            client = client + ":\n\t* "
+            client = client + " - ma następujące produkty:\n\t* "
             products = "\t* ".join(
                 [
                     f"{p.color} {p.name} ({p.quantity} za {p.price:.2f} zł = {p.value:.2f} zł, kupione {p.timestamp:%Y-%m-%d %H:%M:%S})\n"
@@ -28,7 +28,7 @@ class Client:
                 ]
             )
         else:
-            products = " - nie ma produktów"
+            products = " - nie ma produktów.\n"
 
         return client + products
 
