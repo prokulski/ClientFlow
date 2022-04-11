@@ -6,7 +6,7 @@ from models.product import ProductBase
 
 class DB(Protocol):
     def db_connect(
-        self, db_connection_string: str, db_name: str, product_table_name: str, client_table_name: str
+        self, db_connection_string: str, db_name: str, client_table_name: str, product_table_name: str
     ) -> None:
         """inicjalizacja połączenia z bazą"""
         raise NotImplementedError()
