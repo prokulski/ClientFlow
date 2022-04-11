@@ -69,8 +69,10 @@ class MongoDB:
 
     def save_product(self, product: ProductBase) -> None:
         """zapisz produkt do bazy"""
+        self.__product_collection.delete_one({"id": product.id})
         self.__product_collection.insert_one(product.to_dict())
 
     def save_client(self, client: Client) -> None:
         """zapisz klienta do bazy"""
+        self.__client_collection.delete_one({"id": client.id})
         self.__client_collection.insert_one(client.to_dict())
