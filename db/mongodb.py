@@ -5,8 +5,10 @@ from models.client import Client
 from models.product import Product, ProductBase
 from pymongo import MongoClient
 
+from db.db import DB
 
-class MongoDB:
+
+class MongoDB(DB):
     __mongo_client = None
     __mongo_database = None
     __client_collection = None
