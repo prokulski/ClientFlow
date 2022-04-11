@@ -40,19 +40,11 @@ for i in range(5):
             price=round(random.randint(1, 100) / 100, 2),
             quantity=random.randint(1, 10),
         )
-        #     print("Product dict:")
-        #     print(p.to_dict())
-        #     print("\nProduct json:")
-        #     print(p.to_json())
+
+        db.save_product(p)
+
         c.add_product(p)
         time.sleep(0.15)
-    #     print("=" * 20)
-
-    # print("Client:")
-    # print(c)
-    # print("\nclient dict:")
-    # print(c.to_dict())
-    # print("\nclient json:")
     print(c.to_json())
     print("=" * 60)
 
