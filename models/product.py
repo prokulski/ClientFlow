@@ -15,7 +15,7 @@ class ProductBase:
     def to_dict(self) -> Dict:
         d = {
             "name": self.name,
-            "color": self.type,
+            "type": self.type,
             "price": self.price,
             "id": self.id,
         }
@@ -26,7 +26,7 @@ class ProductBase:
         return json.dumps(d, indent=3)
 
     def __repr__(self) -> str:
-        return f"Produkt ID {self.id}: {self.type} \"{self.name}\" ({self.price:.2f} zł)"
+        return f'Produkt: "{self.name}" ({self.type}, cena {self.price:.2f} zł, ID {self.id})'
 
 
 @dataclass
