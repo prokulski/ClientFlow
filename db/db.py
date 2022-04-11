@@ -1,6 +1,6 @@
 from typing import Dict, List, Protocol
 
-from models.client import Client
+from models.client import Customer
 from models.product import ProductBase
 
 
@@ -17,11 +17,11 @@ class DB(Protocol):
         """wczytanie wszystkich produktów z bazy"""
         raise NotImplementedError()
 
-    def load_all_clients(self) -> List[Client]:
+    def load_all_customers(self) -> List[Customer]:
         """wczytanie wszystkich klientów z bazy"""
         raise NotImplementedError()
 
-    def load_one_client(self, client_id: str) -> Client:
+    def load_one_customer(self, client_id: str) -> Customer:
         """wczytanie wszystkich klientów z bazy"""
         raise NotImplementedError()
 
@@ -29,6 +29,6 @@ class DB(Protocol):
         """zapisz produkt do bazy"""
         raise NotImplementedError()
 
-    def save_client(self, client: Client) -> None:
+    def save_customer(self, client: Customer) -> None:
         """zapisz klienta do bazy"""
         raise NotImplementedError()

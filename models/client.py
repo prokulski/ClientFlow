@@ -7,10 +7,10 @@ from models.product import Product
 
 
 @dataclass
-class Client:
+class Customer:
     first_name: str
     last_name: str
-    adress: str
+    address: str
     id: str = field(default_factory=lambda: str(uuid1()))
     products: List[Product] = field(default_factory=list, init=False)
 
@@ -23,7 +23,7 @@ class Client:
             client = client + " - ma następujące produkty:\n\t* "
             products = "\t* ".join(
                 [
-                    f"{p.color} {p.name} ({p.quantity} za {p.price:.2f} zł = {p.value:.2f} zł, kupione {p.timestamp:%Y-%m-%d %H:%M:%S})\n"
+                    f"{p.type} {p.name} ({p.quantity} za {p.price:.2f} zł = {p.value:.2f} zł, kupione {p.timestamp:%Y-%m-%d %H:%M:%S})\n"
                     for p in self.products
                 ]
             )
@@ -36,13 +36,13 @@ class Client:
         d = {
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "adress": self.adress,
+            "address": self.address,
             "id": self.id,
         }
         if self.products:
             d["products"] = [
                 {
-                    "color": p.color,
+                    "color": p.type,
                     "name": p.name,
                     "price": p.price,
                     "quantity": p.quantity,

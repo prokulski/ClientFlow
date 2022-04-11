@@ -8,14 +8,14 @@ from uuid import uuid1
 @dataclass
 class ProductBase:
     name: str
-    color: str
+    type: str
     price: float
     id: str = field(default_factory=lambda: str(uuid1()), init=False)
 
     def to_dict(self) -> Dict:
         d = {
             "name": self.name,
-            "color": self.color,
+            "color": self.type,
             "price": self.price,
             "id": self.id,
         }
@@ -26,7 +26,7 @@ class ProductBase:
         return json.dumps(d, indent=3)
 
     def __repr__(self) -> str:
-        return f"Produkt {self.id=}: {self.color} {self.name} ({self.price:.2f} zł)"
+        return f"Produkt ID {self.id}: {self.type} \"{self.name}\" ({self.price:.2f} zł)"
 
 
 @dataclass

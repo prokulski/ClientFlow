@@ -6,7 +6,7 @@ config = load_config("config.yaml")
 db = MongoDB()
 db.db_connect(config)
 
-clients = db.load_all_clients()
+clients = db.load_all_customers()
 
 for client in clients:
     print(client)

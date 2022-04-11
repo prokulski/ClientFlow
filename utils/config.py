@@ -7,7 +7,6 @@ def load_config(file_path: str) -> Dict:
     with open(file_path, "r", encoding="utf8") as fp:
         config = yaml.safe_load(fp)
 
-    print(config)
     if config.get("database_type") == "mongodb":
         db_data = {
             "db_uri": "mongodb://",
@@ -17,7 +16,7 @@ def load_config(file_path: str) -> Dict:
             "db_pass": config.get("mongodb").get("db_pass"),
             "db_name": config.get("mongodb").get("db_name"),
             "product_table": config.get("mongodb").get("product_table"),
-            "clients_table": config.get("mongodb").get("clients_table"),
+            "customers_table": config.get("mongodb").get("customers_table"),
         }
 
     config_obj = {
@@ -26,7 +25,7 @@ def load_config(file_path: str) -> Dict:
         "db_uri": f"{db_data.get('db_uri')}{db_data.get('db_login')}:{db_data.get('db_pass')}@{db_data.get('db_server')}:{db_data.get('db_port')}",
         "db_name": db_data.get("db_name"),
         "products_table": db_data.get("product_table"),
-        "clients_table": db_data.get("clients_table"),
+        "customers_table": db_data.get("customers_table"),
     }
 
     return config_obj

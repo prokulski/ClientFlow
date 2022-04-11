@@ -7,6 +7,6 @@ mongodb:
   db_port: 27017
   db_login: "root"
   db_pass: "rootpass"
-  db_name: "clients_flow"
+  db_name: "simple_shop"
   product_table: "products"
-  clients_table: "clients"
+  customers_table: "customers"
