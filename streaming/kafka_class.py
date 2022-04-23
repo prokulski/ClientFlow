@@ -45,14 +45,9 @@ class Kafka:
         )
         return self.consumer
 
-    def send_message(self, message: dict) -> bool:
+    def send_message(self, message: dict) -> None:
         if not self.producer:
             raise NoProducerError()
 
         future = self.producer.send(self.topic_name, message)
-        try:
-            _ = future.get(timeout=3)
-            return True
-        except Exception as e:
-            print("Error", e)
-            return False
+        _ = future.get(timeout=3)
