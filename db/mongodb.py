@@ -45,8 +45,7 @@ class MongoDB(DB):
 
     def load_one_product(self, product_id: str) -> ProductBase:
         """wczytanie wszystkich produktów z bazy"""
-        product = self.__products_collection.find({"id": product_id})
-        product = list(product)[0]
+        product = self.__products_collection.find_one({"id": product_id})
         product_obj = self.__preproces_product(product)
         return product_obj
 
@@ -71,8 +70,7 @@ class MongoDB(DB):
 
     def load_one_customer(self, client_id: str) -> Customer:
         """wczytanie wszystkich klientów z bazy"""
-        client = self.__customers_collection.find({"id": client_id})
-        client = list(client)[0]
+        client = self.__customers_collection.find_one({"id": client_id})
         client_obj = self.__preproces_customer(client)
         return client_obj
 
