@@ -6,7 +6,7 @@ W sklepie mogą się pojawić przykładowe zdarzenia:
 
 + operator sklepu dodaje produkt do listy dostępnych w sklepie produktów
 + klient rejestruje się w sklepie i od teraz może robić zakupy
-+ klient kupuje produkt i tym samym dodaje go listy posiadanychrzeczy
++ klient kupuje produkt i tym samym dodaje go listy posiadanych rzeczy
 
 ## Użycie
 
@@ -18,13 +18,13 @@ W sklepie mogą się pojawić przykładowe zdarzenia:
 
 ### Stworzenie klientów
 
-Na początek potrzebujemy przykładowych klientów. Tworzymy ich przez `python tools/make_customers.py`
+Na początek potrzebujemy przykładowych klientów. Tworzymy ich przez `python tools/make_customers_db.py`
 
 Listę klientów możemy podejrzeć przez `python tools/list_customers.py`
 
 ### Stworzenie produktów
 
-Podobnie tworzymy przykładowe produkty dostępne w sklepie `python tools/make_products.py`
+Podobnie tworzymy przykładowe produkty dostępne w sklepie `python tools/make_products_db.py`
 
 Listę dostępnych produktów zobaczymy dzięki `python tools/list_products.py`
 
@@ -35,13 +35,14 @@ flowchart
     Sklep[Operator sklepu] --> NowyProdukt[/dodanie produktu/];
     Klient[Klient sklepu] --> NowyKlient[/rejestracja klienta/];
     Klient --> ZakupProduktu[/zakup produktu/];
-    NowyProdukt --> Kafka{{pas transmisyjny - Apache Kafka}};
-    NowyKlient --> Kafka;
-    ZakupProduktu --> Kafka;
-    Kafka --> Preprocesing{Rozpoznanie akcji};
-    Preprocesing --> DodanieKlienta[/nowy klient/];
-    Preprocesing --> DodanieProduktu[/nowy produkt w sklepie/];
-    Preprocesing --> UpdateProduktu[/zakup produktu/];
+    NowyProdukt --> PreprocesingIn{Zdefiniowanie akcji}
+    NowyKlient --> PreprocesingIn;
+    ZakupProduktu --> PreprocesingIn;
+    PreprocesingIn --> Kafka{{pas transmisyjny - Apache Kafka}};
+    Kafka --> PreprocesingOut{Rozpoznanie akcji};
+    PreprocesingOut --> DodanieKlienta[/nowy klient/];
+    PreprocesingOut --> DodanieProduktu[/nowy produkt w sklepie/];
+    PreprocesingOut --> UpdateProduktu[/zakup produktu/];
     DodanieKlienta --> BazaKlient[(Baza danych klientów)];
     UpdateProduktu --> BazaKlient
     DodanieProduktu --> BazaProd[(Baza danych produktów)];
