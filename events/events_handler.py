@@ -3,16 +3,10 @@ from models.customer import Customer
 from models.product import ProductBase
 
 
-# typy zdarzeń i funkcje je obsługujące
 class EventHandler:
     def __init__(self, message: dict, db: DB) -> None:
-        print(message)
         if not message.get("event_type"):
-            # raise ValueError("Message has to have 'event_type'!")
-            print("Message has to have 'event_type'!")
-            return
-        else:
-            print("There was a event_type")
+            raise ValueError("Message has to have 'event_type'!")
 
         self.__db = db
         self.__message = message
@@ -25,7 +19,6 @@ class EventHandler:
             self.customer_buys_product()
 
     def new_customer(self) -> None:
-        print("\nNew customer")
         msg = self.__message
         c = Customer(
             id=msg.get("id"),
@@ -38,9 +31,12 @@ class EventHandler:
     def new_product(self) -> None:
         msg = self.__message
         p = ProductBase(id=msg.get("id"), name=msg.get("name"), type=msg.get("type"), price=msg.get("price"))
-        print(p)
         self.__db.save_product(p)
 
     def customer_buys_product(self) -> None:
-        print("\nCustomer buys product")
-        print(self.__message)
+        msg = self.__message
+
+        customer = self.__db.load_one_customer(msg.get("customer_id"))
+        product = self.__db.load_one_product(msg.get("product_id"))
+        customer.add_base_product(product, msg.get("quantity"))
+        self.__db.save_customer(customer)
