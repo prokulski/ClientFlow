@@ -1,7 +1,7 @@
 import json
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Optional
 from uuid import uuid1
 
 
@@ -16,7 +16,7 @@ class ProductBase:
         if not self.id:
             self.id = str(uuid1())
 
-    def to_dict(self) -> Dict:
+    def to_dict(self) -> dict:
         d = {
             "name": self.name,
             "type": self.type,
