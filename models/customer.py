@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 from uuid import uuid1
 
-from models.product import Product
+from models.product import Product, ProductBase
 
 
 @dataclass
@@ -18,7 +18,11 @@ class Customer:
         if not self.id:
             self.id = str(uuid1())
 
-    def add_product(self, product):
+    def add_base_product(self, product: ProductBase, quantity: float = 0.0) -> None:
+        prod = Product(**product.to_dict(), quantity=quantity)
+        self.add_product(prod)
+
+    def add_product(self, product: Product) -> None:
         self.products.append(product)
 
     def __repr__(self) -> str:
@@ -46,7 +50,7 @@ class Customer:
         if self.products:
             d["products"] = [
                 {
-                    "color": p.type,
+                    "type": p.type,
                     "name": p.name,
                     "price": p.price,
                     "quantity": p.quantity,
