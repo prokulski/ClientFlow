@@ -1,7 +1,7 @@
 import json
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict
+from typing import Dict, Optional
 from uuid import uuid1
 
 
@@ -10,7 +10,11 @@ class ProductBase:
     name: str
     type: str
     price: float
-    id: str = field(default_factory=lambda: str(uuid1()), init=False)
+    id: Optional[str] = None
+
+    def __post_init__(self):
+        if not self.id:
+            self.id = str(uuid1())
 
     def to_dict(self) -> Dict:
         d = {
@@ -31,7 +35,7 @@ class ProductBase:
 
 @dataclass
 class Product(ProductBase):
-    quantity: float
+    quantity: float = field(default=0.0)
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
     def __post_init__(self):
