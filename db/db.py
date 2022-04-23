@@ -1,6 +1,6 @@
 from typing import Dict, List, Protocol
 
-from models.client import Customer
+from models.customer import Customer
 from models.product import ProductBase
 
 
