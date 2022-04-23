@@ -1,6 +1,6 @@
 kafka_servers:
   - "127.0.0.1:9093"
-kafka_topic_name: "test_topic_1"
+kafka_topic_name: "test_topic_2"
 database_type: "mongodb"
 mongodb:
   db_server: "localhost"
