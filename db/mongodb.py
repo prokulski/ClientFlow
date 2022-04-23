@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import Dict, List
+from typing import List
 
-from models.client import Customer
+from models.customer import Customer
 from models.product import Product, ProductBase
 from pymongo import MongoClient
 
@@ -14,20 +14,23 @@ class MongoDB(DB):
     __customers_collection = None
     __products_collection = None
 
-    def db_connect(self, config: Dict) -> None:
+    def db_connect(self, config: dict) -> None:
         """inicjalizacja połączenia z bazą"""
         self.__mongo_client = MongoClient(config["db_uri"])
         self.__mongo_database = self.__mongo_client[config["db_name"]]
         self.__customers_collection = self.__mongo_database[config["customers_table"]]
         self.__products_collection = self.__mongo_database[config["products_table"]]
 
-    def __preproces_product(self, product: Dict) -> ProductBase:
+    def __preproces_product(self, product: dict) -> ProductBase:
         """Zrób z dicta obiekt typu Product"""
-        return ProductBase(name=product.get("name"), type=product.get("type"), price=product.get("price"))
+        return ProductBase(
+            id=product.get("id"), name=product.get("name"), type=product.get("type"), price=product.get("price")
+        )
 
-    def __preproces_customers_product(self, product: Dict) -> Product:
+    def __preproces_customers_product(self, product: dict) -> Product:
         """Zrób z dicta obiekt typu Produkt który klient kupił"""
         return Product(
+            id=product.get("id"),
             name=product.get("name"),
             type=product.get("type"),
             price=product.get("price"),
@@ -47,7 +50,7 @@ class MongoDB(DB):
         product_obj = self.__preproces_product(product)
         return product_obj
 
-    def __preproces_customer(self, client: Dict) -> Customer:
+    def __preproces_customer(self, client: dict) -> Customer:
         """Zbuduj klienta z dicta"""
         client_obj = Customer(
             first_name=client.get("first_name"),
