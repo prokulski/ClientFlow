@@ -1,9 +1,7 @@
-from typing import Dict
-
 import yaml
 
 
-def load_config(file_path: str) -> Dict:
+def load_config(file_path: str) -> dict:
     with open(file_path, "r", encoding="utf8") as fp:
         config = yaml.safe_load(fp)
 
