@@ -1,5 +1,4 @@
 import json
-import re
 from uuid import uuid1
 
 from kafka import KafkaConsumer, KafkaProducer
