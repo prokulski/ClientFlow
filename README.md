@@ -18,6 +18,7 @@ W sklepie mogą się pojawić przykładowe zdarzenia:
 1. Uruchamiamy potrzebne komponenty (Apache Kafka + MongoDB) przez `docker-compose up`
 1. Uruchamiamy w oddzielnym oknie konsoli konsumenta komunikatów przychodzących Kafką i przepisujących je do bazy danych przez `python tools/kafka_read.py`
 1. Otwieramy kolejne okno konsoli, w którym będzie można uruchamiać poniżej wymienione komendy.
+1. Konfiguracja jest w pliku `config.yaml` - zmiana brokera Kafki, dostępu do bazy danych i tak dalej odbywa się tam. Warto jednak przejrzeć przed zmianami `utils/config.py` i zobaczyć co oznaczają poszczególne pola w YAMLu.
 
 ### Stworzenie klientów
 

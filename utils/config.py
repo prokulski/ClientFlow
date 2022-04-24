@@ -5,17 +5,17 @@ def load_config(file_path: str) -> dict:
     with open(file_path, "r", encoding="utf8") as fp:
         config = yaml.safe_load(fp)
 
-    if config.get("database_type") == "mongodb":
-        db_data = {
-            "db_uri": "mongodb://",
-            "db_server": config.get("mongodb").get("db_server"),
-            "db_port": config.get("mongodb").get("db_port"),
-            "db_login": config.get("mongodb").get("db_login"),
-            "db_pass": config.get("mongodb").get("db_pass"),
-            "db_name": config.get("mongodb").get("db_name"),
-            "product_table": config.get("mongodb").get("product_table"),
-            "customers_table": config.get("mongodb").get("customers_table"),
-        }
+    database_type = config.get("database_type")
+    db_data = {
+        "db_uri": f"{database_type}://",
+        "db_server": config.get(database_type).get("db_server"),
+        "db_port": config.get(database_type).get("db_port"),
+        "db_login": config.get(database_type).get("db_login"),
+        "db_pass": config.get(database_type).get("db_pass"),
+        "db_name": config.get(database_type).get("db_name"),
+        "product_table": config.get(database_type).get("product_table"),
+        "customers_table": config.get(database_type).get("customers_table"),
+    }
 
     config_obj = {
         "kafka_servers": config.get("kafka_servers"),
