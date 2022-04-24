@@ -1,6 +1,6 @@
 # Sklep zdarzeniowy
 
-Projekt to *proof of concept* sklepu opartego o rozproszoną architekturę i komunikację poprzez Kafkę. Bardziej precyzyjny opis znajduje się na [blogu](https://blog.prokulski.science).
+Projekt to *proof of concept* sklepu opartego o rozproszoną architekturę i komunikację poprzez Kafkę. Bardziej precyzyjny opis znajduje się na [blogu]( https://blog.prokulski.science/2022/04/26/sklep-rozproszony/).
 
 W sklepie mogą się pojawić przykładowe zdarzenia:
 
