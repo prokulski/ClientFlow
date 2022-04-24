@@ -31,7 +31,7 @@ class Customer:
             client = client + " - ma następujące produkty:\n\t* "
             products = "\t* ".join(
                 [
-                    f"{p.type} {p.name} ({p.quantity} za {p.price:.2f} zł = {p.value:.2f} zł, kupione {p.timestamp:%Y-%m-%d %H:%M:%S})\n"
+                    f"{p.type} (ID: {p.id}) {p.name} ({p.quantity} za {p.price:.2f} zł = {p.value:.2f} zł, kupione {p.timestamp:%Y-%m-%d %H:%M:%S})\n"
                     for p in self.products
                 ]
             )
@@ -50,6 +50,7 @@ class Customer:
         if self.products:
             d["products"] = [
                 {
+                    "id": p.id,
                     "type": p.type,
                     "name": p.name,
                     "price": p.price,
